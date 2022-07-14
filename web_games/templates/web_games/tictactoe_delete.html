@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load tictactoe_extras %}
+
+{% block title %}Delete{% endblock %}
+
+{% block body %}
+    <h3 style="">Board</h3>
+    {% render_activegame object%}
+    {% if form %}
+    <form method="post">
+    {% csrf_token %}
+        {{ form }}
+    <input type="submit" value="Delete" />
+    </form>
+    {% else %}
+        {% with url_name=request.resolver_match.app_name|add:':create' %}
+        <a href="{% url url_name %}">Create new game</a>
+        {% endwith %}
+    {% endif %}
+{% endblock %}

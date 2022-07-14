@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load i18n tictactoe_extras %}
+
+{% block title %}{% translate 'Tic Tac Toe' %}{% endblock %}
+
+{% block body %}
+{% with app_name=view.request.resolver_match.app_name %}
+    <h2>TicTacToe list</h2>
+    <a href="{% url app_name|add:":create" %}">Create</a>
+    {% for active_game in object_list %}
+        {% if forloop.first %}
+        <table>
+            <tr>
+                <th>#</th>
+                <th>Status</th>
+                <th>Board</th>
+                <th>Play/View</th>
+                <th>Delete</th>
+            </tr>
+        {% endif %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{% if active_game.board.completed %}completed{% else %}pending{% endif %}</td>
+                <td>{% render_activegame active_game %}</td>
+                <td><a href="{% url app_name|add:":play" pk=active_game.pk %}">{% if active_game.board.completed %}View{% else %}Play{% endif %}</a></td>
+                <td><a href="{% url app_name|add:":delete" pk=active_game.pk %}">Delete</a></td>
+            </tr>
+        {% if forloop.last %}
+        </table>
+        {% endif %}
+    {% empty %}
+        <p>Nothing has been done yet</p>
+    {% endfor %}
+    {% include 'web_games/paginator.html' %}
+{% endwith %}
+{% endblock %}

@@ -1,0 +1,8 @@
+{% load tictactoe_extras %}
+<p>Used rule - number of '{{ player_item_id }}' in a row for win: {{ player.cnt_in_row }}</p>
+{{ player.board|render_board:active_game_object.board.pk }}
+{% include 'web_games/tictactoe_activegame_player_info.html' with player=player %}
+{% include 'web_games/tictactoe_activegame_player_info.html' with player=opponent_player %}
+{% if player.is_board_full %}
+    <p>There are no more moves available</p>
+{% endif %}

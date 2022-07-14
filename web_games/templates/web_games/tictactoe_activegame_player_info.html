@@ -1,0 +1,10 @@
+{% with player.is_won as won_vector %}
+{% if won_vector %}
+    <p>Player '{{ won_vector.0.1.id }}' is winner with a sequence</p>
+    {% for item in won_vector %}
+        {% if forloop.first %}<span class="winner" id="winer_sequence_on_board_{{ active_game_object.board.pk }}">{% endif %}
+        <span data-x="{{ item.0.0 }}" data-y="{{ item.0.1 }}">{{ item.0.0 }}:{{ item.0.1 }}</span>{% if not forloop.last %}&gt;{% endif %}
+        {% if forloop.last %}</span>{% endif %}
+    {% endfor %}
+{% endif %}
+{% endwith %}
